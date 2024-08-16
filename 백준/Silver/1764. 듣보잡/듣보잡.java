@@ -11,11 +11,9 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
         HashMap<String,Integer> map = new HashMap<>();
-        ArrayList<String> list = new ArrayList<>();
         int count=0;
         ArrayList<String> answer = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            //list.add(br.readLine());
             map.put(br.readLine(),0);
         }
         for (int i = 0; i < m; i++) {
