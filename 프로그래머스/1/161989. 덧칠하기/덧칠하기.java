@@ -1,4 +1,5 @@
 import java.util.*;
+//indent 줄이면서 최적화해서 다시 풀어보기
 class Solution {
     public int solution(int n, int m, int[] section) {
         int answer = 0;
