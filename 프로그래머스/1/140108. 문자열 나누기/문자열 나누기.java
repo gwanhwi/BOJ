@@ -1,3 +1,4 @@
+//좀 더 간단하게 다시풀기
 class Solution {
     public int solution(String s) {
         int answer = 0;
