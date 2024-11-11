@@ -17,8 +17,8 @@ public class Main {
         }
         for(int i=0;i<M;i++){
             String question = br.readLine();
-            System.out.println(map.get(question));
+            sb.append(map.get(question)).append("\n");
         }
-
+        System.out.println(sb);
     }
 }
