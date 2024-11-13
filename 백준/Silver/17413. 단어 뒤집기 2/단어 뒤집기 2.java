@@ -8,45 +8,32 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         //StringBuilder sb = new StringBuilder();
-        //StringTokenizer st = new StringTokenizer(br.readLine());
-        String str= br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine()," <>",true);
         boolean isTag=false;
         String answer="";
         String tmp="";
-        for(int i=0;i<str.length();i++){
-            char c = str.charAt(i);
-            if(c=='<'){
-                for(int j=tmp.length()-1;j>=0;j--){
-                    answer+=tmp.charAt(j);
-                }
-                answer+=c;
-                tmp="";
+        while(st.hasMoreTokens()){
+            String str = st.nextToken();
+            if(str.equals("<")){
                 isTag=true;
+                answer+=str;
                 continue;
             }
-            if(c=='>'){
-                answer+=c;
+            if(str.equals(">")){
                 isTag=false;
+                answer+=str;
                 continue;
             }
             if(isTag){
-                answer+=c;
+                answer+=str;
                 continue;
             }
-            if(c==' '){
-                for(int j=tmp.length()-1;j>=0;j--){
-                    answer+=tmp.charAt(j);
-                }
-                answer+=c;
-                tmp="";
+            if(str.equals(" ")){
+                answer+=str;
                 continue;
             }
-            tmp+=c;
-
-            if(i==str.length()-1){
-                for(int j=tmp.length()-1;j>=0;j--){
-                    answer+=tmp.charAt(j);
-                }
+            for(int i=str.length()-1;i>=0;i--){
+                answer+=str.charAt(i);
             }
         }
         System.out.println(answer);
