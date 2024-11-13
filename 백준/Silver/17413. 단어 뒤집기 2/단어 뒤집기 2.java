@@ -10,7 +10,6 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine()," <>",true);
         boolean isTag=false;
-        String tmp="";
         while(st.hasMoreTokens()){
             String str = st.nextToken();
             if(str.equals("<")){
