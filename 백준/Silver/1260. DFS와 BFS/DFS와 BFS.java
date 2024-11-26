@@ -1,42 +1,45 @@
 import java.io.*;
 import java.util.*;
 class Main {
-    static boolean[][] graph;
+    static List<Integer>[] graph;
     static boolean[] visited;
-    static List<Integer> list;
+    static StringBuilder sb;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int V = Integer.parseInt(st.nextToken());
-        graph = new boolean[N+1][N+1];
+        graph=new ArrayList[N+1];
+        for(int i=0;i<N+1;i++){
+            graph[i]=new ArrayList<>();
+        }
         for(int i=0;i<M;i++){
             st = new StringTokenizer(br.readLine());
             int s = Integer.parseInt(st.nextToken());
             int e = Integer.parseInt(st.nextToken());
-            graph[s][e]=true;
-            graph[e][s]=true;
+            graph[s].add(e);
+            graph[e].add(s);
         }
-        list = new ArrayList<>();
+        for(int i=0;i<N+1;i++){
+            Collections.sort(graph[i]);
+        }
         visited= new boolean[N+1];
         visited[V]=true;
         dfs(N,M,V);
-        for(int i : list) sb.append(i).append(" ");
+
         sb.append("\n");
         visited= new boolean[N+1];
-        list = new ArrayList<>();
         bfs(N,M,V);
-        for(int i : list) sb.append(i).append(" ");
         System.out.print(sb);
     }
     public static void dfs(int n, int m, int v){
-        list.add(v);
-        for(int i=1;i<graph.length;i++){
-            if(graph[v][i] && !visited[i]) {
-                visited[i]=true;
-                dfs(n,m,i);
+        sb.append(v).append(" ");
+        for(int val : graph[v]){
+            if(!visited[val]) {
+                visited[val]=true;
+                dfs(n,m,val);
             }
         }
     }
@@ -46,11 +49,11 @@ class Main {
         queue.offer(v);
         while(!queue.isEmpty()){
             int now = queue.poll();
-            list.add(now);
-            for(int i=1;i<graph.length;i++){
-                if(graph[now][i] && !visited[i]) {
-                    visited[i]=true;
-                    queue.offer(i);
+            sb.append(now).append(" ");
+            for(int val : graph[now]){
+                if(!visited[val]) {
+                    visited[val]=true;
+                    queue.offer(val);
                 }
             }
         }
