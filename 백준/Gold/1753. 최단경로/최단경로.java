@@ -33,19 +33,13 @@ class Main {
     }
     public static void dijkstra(){
         distance = new int[V+1];
-        boolean[] visited = new boolean[V+1];
         Arrays.fill(distance,Integer.MAX_VALUE);
         distance[K]=0;
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>(){
-            @Override
-            public int compare(int[] o1, int[] o2){
-                return o1[1] - o2[1];     
-            }
-        });
-        visited[K]=true;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((o1,o2)-> o1[1]-o2[1]);
         pq.offer(new int[] {K,0});
         while (!pq.isEmpty()) {
             int[] now = pq.poll();
+            if(distance[now[0]]<now[1]) continue;
             for (int[] next : graph[now[0]]){
                 if(distance[next[0]] > distance[now[0]]+next[1]) {
                     distance[next[0]]=distance[now[0]]+next[1];
