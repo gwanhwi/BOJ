@@ -10,7 +10,7 @@ class Main {
         System.out.println(findYoungerBFS(N,K));
     }
     public static int findYoungerBFS(int N,int K){
-        int kLength=200000;
+        int kLength=100001;
         boolean[] visited = new boolean[kLength];
         Queue<Integer> q = new LinkedList<>();
         visited[N]=true;
@@ -21,17 +21,11 @@ class Main {
             for(int i=0;i<qSize;i++) {
                 int now = q.poll();
                 if(now == K) return time;
-                if (now + 1 < kLength && !visited[now + 1]) {
-                    visited[now+1]=true;
-                    q.offer(now + 1);
-                }
-                if (now - 1 >= 0 && !visited[now - 1]) {
-                    visited[now-1]=true;
-                    q.offer(now - 1);
-                }
-                if (now * 2 < kLength && !visited[now * 2]) {
-                    visited[now*2]=true;
-                    q.offer(now * 2);
+                int[] nextPosition = {now+1,now-1,now*2};
+                for(int nextPos : nextPosition){
+                    if(nextPos<0 || nextPos >100000 || visited[nextPos]) continue;
+                    visited[nextPos]=true;
+                    q.offer(nextPos);
                 }
             }
             time++;
