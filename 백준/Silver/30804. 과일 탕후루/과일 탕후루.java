@@ -3,8 +3,7 @@ import java.util.*;
 
 class Main {
     static int N;
-    static int[] S;
-    static Set<Integer> set;
+    static int[] fruits;
     static Map<Integer,Integer> map;
     static int max=0;
     public static void main(String[] args) throws Exception {
@@ -12,28 +11,25 @@ class Main {
         StringBuilder sb = new StringBuilder();
         N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        S= new int[N];
-        set = new HashSet<>();
+        fruits= new int[N];
         map = new HashMap<>();
         for(int i=0;i<N;i++){
-            int fruit = Integer.parseInt(st.nextToken());
-            S[i]=fruit;
+            fruits[i] = Integer.parseInt(st.nextToken());
         }
         removeFruit();
         System.out.println(max);
     }
     public static void removeFruit(){
-        Queue<Integer> q = new LinkedList<>();
-        for(int i=0;i<N;i++){
-            map.put(S[i], map.getOrDefault(S[i],0)+1);
-            q.offer(S[i]);
-            set.add(S[i]);
-            while(set.size()>2){
-                int removeFruit=q.poll();
-                map.put(removeFruit,map.get(removeFruit)-1);
-                if(map.get(removeFruit)==0) set.remove(removeFruit);
+        int left=0;
+        for(int right=0;right<N;right++){
+            map.put(fruits[right],map.getOrDefault(fruits[right],0)+1);
+            while(map.size()>2){
+                map.put(fruits[left],map.get(fruits[left])-1);
+                if(map.get(fruits[left])==0) map.remove(fruits[left]);
+                left++;
             }
-            max=Math.max(max,q.size());
+
+            max= Math.max(max,right-left+1);
         }
     }
 }
