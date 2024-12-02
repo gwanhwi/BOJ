@@ -24,12 +24,14 @@ class Main {
                     start[0]=i;
                     start[1]=j;
                 }
+                if(graph[i][j]==1) {
+                    graph[i][j]=-1;
+                }
             }
         }
         bfs(start[0],start[1]);
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(!visited[i][j]&&graph[i][j]==1) graph[i][j]=-1;
                 sb.append(graph[i][j]).append(" ");
             }
             sb.append("\n");
@@ -46,11 +48,7 @@ class Main {
             for(int i=0;i<4;i++){
                 int nextRow = now[0] + move[0][i];
                 int nextCol = now[1] + move[1][i];
-                if(nextRow<0||nextRow>=n||nextCol<0||nextCol>=m||visited[nextRow][nextCol]) continue;
-                if(graph[nextRow][nextCol]==0 ){
-                    visited[nextRow][nextCol]=true;
-                    continue;
-                }
+                if(nextRow<0||nextRow>=n||nextCol<0||nextCol>=m||visited[nextRow][nextCol] || graph[nextRow][nextCol]==0) continue;
                 graph[nextRow][nextCol]= graph[now[0]][now[1]]+1;
                 visited[nextRow][nextCol]=true;
                 q.offer(new int[] {nextRow,nextCol});
