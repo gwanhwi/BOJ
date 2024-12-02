@@ -19,14 +19,20 @@ class Main {
                     break;
                 }
             }
-            int k=0;
-            for(int j=0;j<N;j++){
-                k=M*j+x;
-                if(k%N==y) break;
-                if(N==y && k%N==0) break;
+            boolean hasAnswer=false;
+            for(int j=x;j<=LCM;j+=M){
+                if(j%N==y) {
+                    hasAnswer=true;
+                    sb.append(j).append("\n");
+                    break;
+                }
+                if(N==y && j%N==0){
+                    hasAnswer=true;
+                    sb.append(j).append("\n");
+                    break;
+                }
             }
-            if(k>LCM) k=-1;
-            sb.append(k).append("\n");
+            if(!hasAnswer) sb.append(-1).append("\n");
         }
         System.out.println(sb);
     }
