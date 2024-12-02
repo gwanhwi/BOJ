@@ -6,31 +6,34 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int M = Integer.parseInt(br.readLine());
-        Set<Integer> set = new HashSet<>();
+        int S=0;
+        
         for(int i=0;i<M;i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
-
             String operation =  st.nextToken();
-
             int x = -1;
             if(st.hasMoreTokens()) x=Integer.parseInt(st.nextToken());
-            if(operation.equals("add")) set.add(x);
+            if(operation.equals("add")){
+                S |= 1<<x;
+            }
             else if(operation.equals("remove")) {
-                if(set.contains(x)) set.remove(x);
+                S ^=S&1<<x;
             }
             else if(operation.equals("check")) {
-                if(set.contains(x)) sb.append(1).append("\n");
-                else sb.append(0).append("\n");
+                int n= (S & 1<<x)==0 ? 0 : 1;
+                sb.append(n).append("\n");
             }
             else if(operation.equals("toggle")) {
-                if(set.contains(x)) set.remove(x);
-                else set.add(x);
+                S ^=1<<x;
             }
             else if(operation.equals("all")) {
-                set.clear();
-                for(int j=1;j<=20;j++) set.add(j);
+                S=0;
+                for(int j=1;j<=20;j++)
+                    S |=1<<j;
             }
-            else if(operation.equals("empty")) set.clear();
+            else if(operation.equals("empty")){
+                S=0;
+            }
         }
         System.out.println(sb);
     }
