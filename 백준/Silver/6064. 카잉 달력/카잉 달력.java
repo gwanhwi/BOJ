@@ -21,12 +21,7 @@ class Main {
             }
             boolean hasAnswer=false;
             for(int j=x;j<=LCM;j+=M){
-                if(j%N==y) {
-                    hasAnswer=true;
-                    sb.append(j).append("\n");
-                    break;
-                }
-                if(N==y && j%N==0){
+                if((j-1)%N==y-1) {
                     hasAnswer=true;
                     sb.append(j).append("\n");
                     break;
