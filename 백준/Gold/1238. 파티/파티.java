@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 class Main {
-    static List<int[]>[] graph;
     static int N;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -11,9 +10,11 @@ class Main {
         N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
         int X = Integer.parseInt(st.nextToken());
-        graph = new ArrayList[N+1];
+        List<int[]>[] graph = new ArrayList[N+1];
+        List<int[]>[] reverseGraph = new ArrayList[N+1];
         for(int i=1;i<N+1;i++){
             graph[i]=new ArrayList<>();
+            reverseGraph[i]=new ArrayList<>();
         }
         for(int i=0;i<M;i++){
             st = new StringTokenizer(br.readLine());
@@ -21,17 +22,19 @@ class Main {
             int v = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
             graph[u].add(new int[] {v,cost});
+            reverseGraph[v].add(new int[] {u,cost});
         }
-        int[] totalTime = new int[N+1];
-        int answer=0;
+        int[] timeToX = dijkstra(reverseGraph,X);
+        int[] timeFromX = dijkstra(graph,X);
+        int maxTime=0;
         for(int i=1;i<N+1;i++){
-            totalTime[i]=dijkstra(i)[X]+dijkstra(X)[i];
-            answer=Math.max(answer,totalTime[i]);
+            maxTime=Math.max(maxTime, timeToX[i]+timeFromX[i]);
         }
 
-        System.out.println(answer);
+
+        System.out.println(maxTime);
     }
-    static int[] dijkstra(int start){
+    static int[] dijkstra(List<int[]>[] graph, int start){
         PriorityQueue<int[]> pq = new PriorityQueue<>((o1,o2)->o1[1]-o2[1]);
         boolean[] visited = new boolean[N+1];
         int[] dist = new int[N+1];
