@@ -16,12 +16,12 @@ public class Main {
             oilPrice[i]=Integer.parseInt(st.nextToken());
         }
         int cheapPriceCity=Integer.MAX_VALUE;
-        int answer = 0;
+        long answer = 0;
         for(int i=0;i<edge.length;i++){
             if(oilPrice[i]<cheapPriceCity){
                 cheapPriceCity=oilPrice[i];
             }
-            answer+=edge[i]*cheapPriceCity;
+            answer+=(long)edge[i]*(long)cheapPriceCity;
         }
         System.out.println(answer);
     }
