@@ -12,29 +12,24 @@ public class Main {
                 arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        List<Set<Integer>> list = new ArrayList<>();
+        int maxFriends=-1;
+        int studentNum=-1;
         for(int i=0;i<N;i++){
-            list.add(new HashSet<>());
-        }
-        for(int j=0;j<5;j++){
-            for(int i=0;i<N;i++){
-                int val = arr[i][j];
-                for(int k=0;k<N;k++){
-                    if(k==i) continue;
-                    if(arr[k][j] == val){
-                        list.get(i).add(k);
+            int friends=0;
+            for(int k=0;k<N;k++){
+                if(k==i) continue;
+                for(int j=0;j<5;j++){
+                    if(arr[i][j] == arr[k][j]) {
+                        friends++;
+                        break;
                     }
                 }
             }
-        }
-        int maxNum=list.get(0).size();
-        int student=1;
-        for(int i=1;i<list.size();i++){
-            if(list.get(i).size()>maxNum){
-                maxNum=list.get(i).size();
-                student=i+1;
+            if(friends>maxFriends){
+                maxFriends=friends;
+                studentNum=i+1;
             }
         }
-        System.out.println(student);
+        System.out.println(studentNum);
     }
 }
