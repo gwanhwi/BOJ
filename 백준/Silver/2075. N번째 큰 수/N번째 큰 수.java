@@ -6,15 +6,14 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
-        List<Integer> list = new ArrayList<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> o2-o1);
         for(int i=0;i<N;i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             for(int j=0;j<N;j++){
-                list.add(Integer.parseInt(st.nextToken()));
+                pq.add(Integer.parseInt(st.nextToken()));
             }
         }
-        Collections.sort(list, Collections.reverseOrder());
-
-        System.out.println(list.get(N-1));
+        for(int i=0;i<N-1;i++) pq.poll();
+        System.out.println(pq.poll());
     }
 }
