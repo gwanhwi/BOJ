@@ -1,20 +1,28 @@
 const fs = require('fs');
-const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+const input = fs.readFileSync('/dev/stdin').toString().trim().split(/\s+/);
+const N = Number(input[0]);
+const K = Number(input[1]);
+const A = input.slice(2).map(Number);
 
-const [N, K] = input[0].split(' ').map(Number);
-const arr = input[1].split(' ').map(Number);
+let dp = Array.from({ length: N + 1 }, () => Array(K + 1).fill(-Infinity));
+dp[0][0] = 0;
 
-let indexed = arr.map((value, idx) => [value, idx]);
-indexed.sort((a, b) => (b[0] + b[1]) - (a[0] + a[1]));
+for (let i = 0; i < N; i++) {
+  for (let k = 0; k <= K; k++) {
+    if (dp[i][k] === -Infinity) continue;
 
-let selected = indexed.slice(0, K);
+    if (dp[i + 1][k] < dp[i][k]) {
+      dp[i + 1][k] = dp[i][k];
+    }
 
-selected.sort((a, b) => a[1] - b[1]);
-
-let totalScore = 0;
-for (let i = 0; i < K; i++) {
-  const [value, idx] = selected[i];
-  totalScore += value - i;
+    if (k + 1 <= K) {
+      const score = A[i] - k;
+      const newScore = dp[i][k] + score;
+      if (dp[i + 1][k + 1] < newScore) {
+        dp[i + 1][k + 1] = newScore;
+      }
+    }
+  }
 }
 
-console.log(totalScore);
+console.log(dp[N][K]);
